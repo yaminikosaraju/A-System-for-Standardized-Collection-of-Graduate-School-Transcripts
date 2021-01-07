@@ -31,12 +31,7 @@ const columns = [
     key: 'courseGrade',
   }
 ]
-const data = [{
-    id: '1010',
-    name: 'Database',
-    faculty: 'Computer Science',
-    grade: 4,
-  }]
+
 
 class Transcript extends React.Component {
 
@@ -51,7 +46,7 @@ class Transcript extends React.Component {
       averageGrade : this.props.transcriptDetails.averageGrade, academicStanding: this.props.transcriptDetails.academicStanding,
       averageClassGrade:this.props.transcriptDetails.averageClassGrade, courses: this.props.transcriptDetails.courses,
 
-      courseID:null, courseName : null, courseFaculty:null, courseGrade: null
+      courseID:'', courseName : '', courseFaculty:'', courseGrade: ''
     }
   }
 
@@ -83,13 +78,16 @@ class Transcript extends React.Component {
     });
   }
     render() {
+      //const courseAdd = !(this.state.courseID != '' && this.state.courseName != ''&&
+      //this.state.courseFaculty != '' && this.state.courseGrade != '')
         return (
             <div>
+              <p>hiiip{this.state.courseID == 'abc'}</p>
               <ProgressBar percent={50} filledBackground="linear-gradient(to right, #fefb72, #f0bb31)"/>
               <br/>
               <h5 style ={{textAlign:'center'}}>Transcript Details</h5>
               <div className = 'wrapper hideOverflow '>
-                <Button className='center' onClick={() => this.onClickHandle('prev')}>Previous</Button>
+                <Button className='center prevbtn' onClick={() => this.onClickHandle('prev')}>Previous</Button>
               
                 <Container className= 'studDiv ' >
                     <Form>
@@ -168,15 +166,17 @@ class Transcript extends React.Component {
                           </Form.Group>
                           <br/>
                           <Form.Group as={Col} sm = {2} controlId="formProgram">
-                                  <Form.Label >Add</Form.Label>                            
+                                  <Form.Label >Add</Form.Label> 
+                                  <p >  <Button  >                      
                                 <PlusCircleOutlined className="mr-sm-2" onClick = {() => this.courseAddHandle()} />
+                                </Button> </p>
                         </Form.Group>
                   </Form.Row>
                     </Form>
                     <Table columns={columns} dataSource={this.state.courses}   />
                 </Container>
             
-                <Button  className='center'  type="primary" onClick={() => this.onClickHandle('next')}> Next</Button>
+                <Button  className='center nextbtn'  type="primary" onClick={() => this.onClickHandle('next')}> Next</Button>
               </div>
             <GradingSchemeModal visibility= {this.state.modalVisible} onClose={() => this.closeModal()}></GradingSchemeModal>
   

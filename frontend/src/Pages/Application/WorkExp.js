@@ -36,7 +36,7 @@ class WorkExp extends React.Component {
               <br/>
               <h5 style ={{textAlign:'center'}}>Work Experience Details</h5>
               <div className = 'wrapper hideOverflow '>
-                <Button className='center' onClick={() => this.onClickHandle() }> Previous</Button>                
+                <Button className='center prevbtn' onClick={() => this.onClickHandle() }> Previous</Button>                
                 <Container className= 'studDiv ' >                      
                     <Form>
                       <Form.Row>
@@ -83,7 +83,7 @@ class WorkExp extends React.Component {
                       
                     </Form>
                   </Container>
-                <Button type="primary" className='center' onClick={() =>this.submitHandle() }>Done</Button>
+                <Button type="primary" className='center nextbtn' onClick={() =>this.submitHandle() }>Submit</Button>
             </div>
             </div>
         )

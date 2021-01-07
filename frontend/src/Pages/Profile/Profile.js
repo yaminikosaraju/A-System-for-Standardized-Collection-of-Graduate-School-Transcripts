@@ -52,6 +52,7 @@ class Profile extends React.Component {
    componentDidMount(){   
    let session = JSON.parse(Cookies.get("session"))
     var user = session.user;var id;
+    console.log(user.id)
     
     
     axios.get('/getSubmittedApplication/'+ user.id).then( (response) => {

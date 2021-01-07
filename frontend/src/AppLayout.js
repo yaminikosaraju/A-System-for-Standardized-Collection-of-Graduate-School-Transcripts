@@ -11,7 +11,8 @@ function AppLayout({children,header=''}){
   console.log('app')
   const logged = JSON.parse(Cookies.get("loggedIn"));
   console.log(logged)
-  
+  let session = JSON.parse(Cookies.get("session"))
+  let id = session.user.id
  
   //console.log(session)
   return(

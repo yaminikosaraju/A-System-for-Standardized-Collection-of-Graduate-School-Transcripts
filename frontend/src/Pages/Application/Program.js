@@ -3,7 +3,6 @@ import axios from "axios";
 import {PlusCircleOutlined} from '@ant-design/icons';
 import {Button,Modal,message} from 'antd'
 import {Form,Col, Container, Row} from 'react-bootstrap';
-import {DisplayIelts} from './TestScores';
 import Cookies from "js-cookie";
 
 import "react-step-progress-bar/styles.css";
@@ -14,7 +13,7 @@ class Program extends React.Component {
         super(props)
         this.state = {
             modalVisible: false,
-
+            validated : false,
             program: this.props.programDetails.program, 
             dept:this.props.programDetails.dept,route:this.props.programDetails.route,
             intake:this.props.programDetails.intake, term: this.props.programDetails.term,
@@ -29,7 +28,14 @@ class Program extends React.Component {
       
         closeModal =() =>{ this.setState({modalVisible:false}) } 
 
-      handleNext = () => {
+      handleNext = (event) => {
+        // const form = event.currentTarget;
+        // if (form.checkValidity() === false) {
+        //   event.preventDefault();
+        //   event.stopPropagation();
+        // }
+    
+        //  this.setState({validated:true});
           let details = {program: this.state.program,  
             dept:this.state.dept,route:this.state.route,
             intake:this.state.intake, term: this.state.term,            
@@ -55,7 +61,7 @@ class Program extends React.Component {
                         <Form.Row>
                             <Form.Group as={Col} sm = {2} controlId="formProgram">
                                 <Form.Label>Program</Form.Label>
-                                <Form.Control as="select"  className="mr-sm-2" id="inlineFormCustomSelect" custom value={this.state.program}
+                                <Form.Control as="select" required className="mr-sm-2" id="inlineFormCustomSelect" custom value={this.state.program}
                     onChange={e => this.setState({ program: e.target.value })}>
                                     <option value="0">Choose Program</option>
                                     <option value="Master of Science">Master of Science</option>
@@ -66,7 +72,7 @@ class Program extends React.Component {
 
                             <Form.Group as={Col} sm = {2} controlId="formGridPassword">
                                 <Form.Label>Department</Form.Label>
-                                <Form.Control as="select"  className="mr-sm-2" id="inlineFormCustomSelect" custom value={this.state.dept}
+                                <Form.Control as="select" required className="mr-sm-2" id="inlineFormCustomSelect" custom value={this.state.dept}
                     onChange={e => this.setState({ dept: e.target.value })}>
                                     <option value="0">Choose Faculty</option>
                                     <option value="Computer Science">Computer Science</option>
@@ -176,11 +182,11 @@ class Program extends React.Component {
                         </Form.Row>
                     </Form>
                 </Container>
-                <Button  className='center'  type="primary" onClick={() =>this.handleNext()}>
+                <Button  className='center nextbtn'  type="primary" onClick={() =>this.handleNext()}>
               Next
             </Button>
             </div>
-            <EptModal visibility= {this.state.modalVisible} onClose={() => this.closeModal()}></EptModal>
+            <EptModal visibility = {this.state.modalVisible} onClose={() => this.closeModal()}></EptModal>
          </>
         )
     }

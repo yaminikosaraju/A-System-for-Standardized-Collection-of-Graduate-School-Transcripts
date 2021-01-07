@@ -4,7 +4,7 @@ var con = require('../Database/db');
 var router = express.Router();
 
 const hm = {'A+':4.0, 'A':4.0, 'A-':3.7, 'B+':3.3 , 'B':3.0, 'B-':2.7, 'C+': 2.3, 'C': 2.0, 'C-':1.7,'D+':1.3,'D': 1.0,'E':0.0,'F':0.0}
-const hmNum = [4.0,3.7,3.3,3.0,2.7,2.3,2.0,1.7,1.3,1.0,0.0]
+const hmNum = [4.0,4.0,3.7,3.3,3.0,2.7,2.3,2.0,1.7,1.3,1.0,0.0,0.0]
 const hmAlpha = ['A+','A',"A-","B+","B","B-","C+","C","C-","D+","D","E"]
 /* GET users listing. */
 
@@ -90,13 +90,17 @@ router.post('/submitStudApplication', function(req, res, next){
           var cDetails = course, gradee;
           if(!isNaN(course.courseGrade)){gradee = parseInt(course.courseGrade, 10);}
           else{gradee = course.courseGrade}
+          console.log(gradee)
           for(row of table){
+            //console.log(row)
             //gradesof courses summation
             if((row.scale1_max >= gradee && gradee >= row.scale1_min)|| (row.scale2_max >= gradee && gradee >= row.scale2_min) || (row.gradeDescription == gradee)|| (row.degreeClassification == gradee))
             { 
+              
               score += hm[row.USEquivalent];break;
             }
           }
+          console.log(score)
           //inserting grades of courses
           var courseSql = 'insert into course(??,??,??,??,??) values(?,?,?,?,?)';
           var courseValues = ['transcriptid', 'courseName', 'grade', 'coursedept', 'courseID',transcriptID,cDetails.courseName,
@@ -105,14 +109,16 @@ router.post('/submitStudApplication', function(req, res, next){
               if(err)  throw err;
             })
          }
-         var avgScore = (score/coursenum),avgGrade; 
+         var avgScore = (score/coursenum),avgGrade;
+         console.log(avgScore) 
          for(  i = 0; i < hmNum.length; i++){
-          if (avgScore > hmNum[i]){avgGrade = hmAlpha[i]}
+          
+          if (avgScore > hmNum[i]){ avgScore = hmNum[i];avgGrade = hmAlpha[i];break}
          }
          var  name = req.user.fname+" "+req.user.lname;
          var scoreSql = 'insert into scores(applicationid,score1,score2,uid,intake,userName,userEmail) values(?,?,?,?,?,?,?)';
         
-         con.query(scoreSql,[appID,avgScore,avgGrade,uid,pDetails.intake,name ,req.user.email], function(err){
+         con.query(scoreSql,[appID,avgScore,avgGrade,uid,pDetails.intake,name ,req.user.email], function(err,data){
            if(err) throw err;
            res.send({ok:'ok'})
          })

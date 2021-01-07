@@ -52,7 +52,7 @@ class Degree extends React.Component {
             <br/>
             <h5 style ={{textAlign:'center'}}>Degree Details</h5>
             <div className = 'wrapper hideOverflow '>
-                <Button className='center' onClick={() => this.onClickHandle('prev')}> Previous</Button>
+                <Button className='center prevbtn' onClick={() => this.onClickHandle('prev')}> Previous</Button>
      
                 <Container className= 'studDiv ' >
                         <Form>
@@ -150,7 +150,7 @@ class Degree extends React.Component {
                     
                         </Form>
                 </Container>
-                <Button className='center'  type="primary" onClick={() => this.onClickHandle('next')}>Next</Button>
+                <Button className='center nextbtn'  type="primary" onClick={() => this.onClickHandle('next')}>Next</Button>
             </div>
        </>
         )
