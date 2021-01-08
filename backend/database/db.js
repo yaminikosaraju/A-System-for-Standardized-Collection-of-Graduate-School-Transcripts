@@ -6,7 +6,7 @@ const con = mysql.createConnection({
   host: 'sql9.freemysqlhosting.net',
   user: 'sql9385558',
   password: '',
-  database: 'sql9385558'
+  database: 'sql9385558',
 });
 
 const  con1 = mysql.createConnection({
