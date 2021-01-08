@@ -3,13 +3,21 @@ const mysql = require('mysql');
 // First you need to create a connection to the database
 // Be sure to replace 'user' and 'password' with the correct values
 const con = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: 'minime',
-  database: 'mydb'
+  host: 'sql9.freemysqlhosting.net',
+  user: 'sql9385558',
+  password: '',
+  database: 'sql9385558'
 });
 
-con.connect((err) => {
+const  con1 = mysql.createConnection({
+  host: 'mydb.cjul7vkbil6x.ca-central-1.rds.amazonaws.com',
+  user: 'munadmin',
+  password: '',
+  database: ''
+
+})
+
+con.connect((err) =>{
   if(err){
       console.log(err)
     console.log('Error connecting to Db');
