@@ -53,8 +53,7 @@ class Profile extends React.Component {
    let session = JSON.parse(Cookies.get("session"))
     var user = session.user;var id;
     console.log(user.id)
-    
-    
+    axios.defaults.headers.common["Authorization"] = JSON.parse(Cookies.get("session")).token;
     axios.get('/getSubmittedApplication/'+ user.id).then( (response) => {
       console.log(response.data.appDetails)
       let workData = response.data.appDetails.workExp, transData =response.data.appDetails.transcript;

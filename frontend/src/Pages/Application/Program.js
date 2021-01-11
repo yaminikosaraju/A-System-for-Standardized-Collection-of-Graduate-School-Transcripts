@@ -29,17 +29,6 @@ class Program extends React.Component {
         closeModal =() =>{ this.setState({modalVisible:false}) } 
 
       handleNext = (event) => {
-        console.log(event)
-          alert("GG")
-          event.preventDefault();
-        const form = event.currentTarget;
-        console.log(form)
-        if (form.checkValidity() === false) {
-          event.preventDefault();
-          event.stopPropagation();
-        }
-    
-         this.setState({validated:false});
           let details = {program: this.state.program,  
             dept:this.state.dept,route:this.state.route,
             intake:this.state.intake, term: this.state.term,            
@@ -49,7 +38,7 @@ class Program extends React.Component {
             eptWriting:this.state.eptWriting,eptListening:this.state.eptListening,eptReading:this.state.eptReading
      
         }
-          //this.props.programNext(details)
+          this.props.programNext(details)
       }
     render() {
         const vals = this.state
@@ -61,7 +50,7 @@ class Program extends React.Component {
             <div className = 'wrapper hideOverflow '>
                 <Container className= 'studDiv '>
           
-                    <Form id ='programform' sm = {5} width = '50%' noValidate validated={this.state.validated} onSubmit={this.handleNext} >
+                    <Form id ='programform' sm = {5} width = '50%'  >
                         <Form.Row>
                             <Form.Group as={Col} sm = {2} controlId="formProgram">
                                 <Form.Label>Program</Form.Label>
@@ -186,7 +175,7 @@ class Program extends React.Component {
                         </Form.Row>
                     </Form>
                 </Container>
-                <Button  className='center nextbtn' form = 'programform'  type = 'submit'  //onClick ={() =>this.handleNext()}
+                <Button  className='center nextbtn' type = 'primary'  onClick ={() =>this.handleNext()}
                  >
                Next
             </Button> 

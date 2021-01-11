@@ -5,8 +5,9 @@ import { Table, Tag, Space } from 'antd';
 import {CloudDownloadOutlined,ToolOutlined} from '@ant-design/icons';
 import AppLayout from  '../../AppLayout';
 import { Redirect, Link } from "react-router-dom";
-import {Dropdown,DropdownButton} from 'react-bootstrap';
+import {Dropdown,DropdownButton,Button} from 'react-bootstrap';
 import Cookies from "js-cookie";
+var FileSaver = require('file-saver');
 
 const headers = [
   { label: "Applicant ID", key: "uid" },{ label: "Applicant Name", key: "userName" },{label:'Applicant Email', key: 'userEmail'},
@@ -33,11 +34,25 @@ class GradOfficerHome extends React.Component {
     }
   }
 
+
+getExcel = () =>{
+  axios.defaults.headers.common["Authorization"] =  JSON.parse(Cookies.get("session")).token;
+  axios.get('/getExcel', { responseType: 'arraybuffer' 
+    })
+    .then((response) => {
+      
+      var  fileName = 'studentDetails.xlsx';
+    
+      var blob = new Blob([response.data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+      FileSaver.saveAs(blob, fileName);
+    });
+}
+
+
   componentDidMount(){        
     axios.defaults.headers.common["Authorization"] =  JSON.parse(Cookies.get("session")).token;
      axios.get('/getStudentScores').then( (response) => {
       let arr =[]
-      alert("GG")
       for(var i of response.data.scoreData){arr.push(i)}
       this.setState({ scoreData: arr });
     });
@@ -52,14 +67,15 @@ class GradOfficerHome extends React.Component {
 </DropdownButton>
 <div style ={{display: 'inline'}}>
  <a href='/gradRequests'> <ToolOutlined style={{float:'right',padding: '5px'}} /></a>
- <CSVLink
+ {/* <CSVLink
   data={this.state.scoreData}
   filename={"my-file.csv"}
   headers={headers}
   
   target="_blank"
 ><CloudDownloadOutlined  style={{float:'right',padding: '5px'}} />
-</CSVLink>
+</CSVLink> */}
+<Button size='2' className = 'secondary' style={{float:'right',padding: '5px'}} onClick = {() => this.getExcel()}><CloudDownloadOutlined  style={{float:'right',padding: '5px'}} /></Button>
   </div>
 
 <Table columns={columns} dataSource={this.state.scoreData} />

@@ -24,7 +24,6 @@ class ResetPassword extends React.Component {
     axios
       .get("/auth/resetPassword/" + id + "/" + token)
       .then((response) => {
-        alert(response.data.id)
         if (response.data.authenticated)
           this.setState({ error: false, id: response.data.id });
         else this.setState({ error: true, errorMsg: response.data.errorMsg });
@@ -35,7 +34,6 @@ class ResetPassword extends React.Component {
   updatePassword = (key, value) => this.setState({ [key]: value });
 
   sendResetPassword = () => {
-    alert(this.state.id)
     if (this.state.password1 !== this.state.password2)
       return this.setState({ errorMsg: "Passwords entered do not match." });
     let data = {

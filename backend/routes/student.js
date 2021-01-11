@@ -131,7 +131,7 @@ router.post('/submitStudApplication', function(req, res, next){
 
 
 router.get('/getSubmittedApplication/:id',function(req,res){
-  
+  console.log('jj')
   var uid = req.params.id ,appDetails = {program : null, workExp: null , degree: null, transcript: null}
   console.log(uid)
   var appSql = 'select * from application where uid = ?';
@@ -140,6 +140,7 @@ router.get('/getSubmittedApplication/:id',function(req,res){
     console.log(pDetails.length)
     var latest = pDetails.length -1 ;
     appDetails.program = pDetails[latest] ;
+    console.log(pDetails[latest])
     var greSql = 'select * from grescore where applicationid = ?';
     con.query(greSql, pDetails[latest].applicationid, function(err,greDetails){
       if(err)  throw err;
@@ -165,11 +166,11 @@ router.get('/getSubmittedApplication/:id',function(req,res){
       con.query(degreeSql,['applicationid',pDetails[latest].applicationid], function(err, dDetails){
         if(err) throw err;
         appDetails.degree = dDetails[0];
-
-        var transcriptSql = 'select * from transcript where ??= ?'
-        con.query(transcriptSql,['idDegree',dDetails[0].idDegree],function(err,tDetails){
+        console.log(dDetails)
+        var transcriptSql = 'select * from transcript where idDegree = ?'
+        con.query(transcriptSql,dDetails[0].idDegree,function(err,tDetails){
           if(err) throw err;          
-
+          console.log(tDetails)
           var courseSql = 'select * from course where ?? =?';
           con.query(courseSql,['transcriptid',tDetails[0].idtranscript],function(err,courses){
             if(err) throw err;
@@ -178,6 +179,7 @@ router.get('/getSubmittedApplication/:id',function(req,res){
               tDetails[0].courses.push(course)
             }
             appDetails.transcript = tDetails[0];
+            console.log(appDetails)
             res.send({appDetails:appDetails})
           })
         })

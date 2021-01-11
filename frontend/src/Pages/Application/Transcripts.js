@@ -82,7 +82,7 @@ class Transcript extends React.Component {
       //this.state.courseFaculty != '' && this.state.courseGrade != '')
         return (
             <div>
-              <p>hiiip{this.state.courseID == 'abc'}</p>
+              
               <ProgressBar percent={50} filledBackground="linear-gradient(to right, #fefb72, #f0bb31)"/>
               <br/>
               <h5 style ={{textAlign:'center'}}>Transcript Details</h5>

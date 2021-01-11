@@ -55,6 +55,8 @@ class UserProfile extends React.Component {
     var user = session.user;var id;
     axios.defaults.headers.common["Authorization"] =  session.token;
     id = window.location.href.split("/")[4];
+    
+    axios.defaults.headers.common["Authorization"] = JSON.parse(Cookies.get("session")).token;
     axios.get('/getUser/'+ id).then( (response) => { this.setState({userProfile: response.data.userProfile})})
     axios.get('/getSubmittedApplication/'+ id).then( (response) => {
       let workData = response.data.appDetails.workExp, transData =response.data.appDetails.transcript;

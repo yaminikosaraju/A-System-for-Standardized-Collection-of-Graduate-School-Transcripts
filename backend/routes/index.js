@@ -26,6 +26,7 @@ function generateToken(user) {
 router.all("/*", function (req, res,next) {
   let NoAuthRequired =
     /^api/.test(req.url.split("/")[1]) || /^auth/.test(req.url.split("/")[1]);
+  console.log(NoAuthRequired);
   if (NoAuthRequired) { req.next();} 
   else {
     var tokenn = req.headers['authorization'];
