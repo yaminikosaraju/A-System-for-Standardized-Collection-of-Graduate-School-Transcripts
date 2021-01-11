@@ -4,7 +4,13 @@ const mysql = require('mysql');
 // Be sure to replace 'user' and 'password' with the correct values
 
 
+const  con = mysql.createConnection({
+  host: '',
+  user: '',
+  password: '',
+  database: ''
 
+})
 
 con.connect((err) =>{
   if(err){
